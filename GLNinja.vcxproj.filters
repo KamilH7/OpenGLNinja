@@ -16,24 +16,24 @@
     <Filter Include="Pliki zasobów\Shaders">
       <UniqueIdentifier>{74c8c12d-cde1-4bee-9403-5b1bea79c425}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Pliki zasobów\Models">
-      <UniqueIdentifier>{cab61982-ca86-443c-9476-ed5218561ec2}</UniqueIdentifier>
+    <Filter Include="Pliki zasobów\Other">
+      <UniqueIdentifier>{c2fdc6b7-3cd9-4d37-a006-77949899dc8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="shaderClass.cpp">
+    <ClCompile Include="ShaderProgram.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="stb.cpp">
@@ -42,54 +42,38 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="VAO.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="EBO.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="VBO.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mesh.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="shaderClass.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
+    <None Include="default.vert">
+      <Filter>Pliki zasobów\Shaders</Filter>
+    </None>
+    <None Include="default.frag">
+      <Filter>Pliki zasobów\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\pop_cat.png">
+      <Filter>Pliki zasobów\Other</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="VAO.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="VBO.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgram.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="EBO.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="default.frag">
-      <Filter>Pliki zasobów\Shaders</Filter>
-    </None>
-    <None Include="default.vert">
-      <Filter>Pliki zasobów\Shaders</Filter>
-    </None>
-    <None Include="Resources\models\ground\scene.bin">
-      <Filter>Pliki zasobów\Models</Filter>
-    </None>
-    <None Include="Resources\models\trees\scene.bin">
-      <Filter>Pliki zasobów\Models</Filter>
-    </None>
+    <ClInclude Include="Texture.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
