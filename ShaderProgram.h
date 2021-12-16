@@ -10,8 +10,6 @@
 
 using namespace std;
 
-const char* ReadFile(const char* filename);
-
 class ShaderProgram
 {
 	public:

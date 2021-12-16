@@ -1,8 +1,8 @@
 #include"ShaderProgram.h"
 using namespace std;
 
-// Returns everything in the specified file as text
-const char* ReadFile(const char* path)
+// Returns everything in the specified file as a string
+string ReadFile(const char* path)
 {
 	ifstream file(path, ios::binary);
 
@@ -14,17 +14,21 @@ const char* ReadFile(const char* path)
 		file.seekg(0, ios::beg);
 		file.read(&contents[0], contents.size());
 		file.close();
-		return contents.c_str();
+		return contents;
 	}
+
 	throw(errno);
 }
 
 // Constructor that creates a shader program from the vertex and fragment shaders. Configures OpenGL accordingly.
 ShaderProgram::ShaderProgram(const char* vertexFile, const char* fragmentFile)
 {
+	string vertexOutput = ReadFile(vertexFile);
+	string fragmentOutput = ReadFile(fragmentFile);
+
 	// Get source code from both shaders
-	const char* vertexSource = ReadFile(vertexFile);
-	const char* fragmentSource = ReadFile(fragmentFile);
+	const char* vertexSource = vertexOutput.c_str();
+	const char* fragmentSource = fragmentOutput.c_str();
 
 	// Create shader objects
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -71,7 +75,7 @@ void ShaderProgram::PrintShaderErrors(GLuint shaderID, const char* shaderName)
 	if (hasCompiled == GL_FALSE)
 	{
 		glGetShaderInfoLog(shaderID, 1024, NULL, infoLog);
-		cout << shaderName << " compilation has come across errors:" << "\n" << infoLog << std::endl;
+		cout << shaderName << "compilation has come across errors:" << "\n" << infoLog << std::endl;
 	}
 }
 
@@ -100,5 +104,6 @@ void ShaderProgram::Activate()
 void ShaderProgram::Delete()
 {
 	glDeleteProgram(ID);
+	delete this;
 }
 	
