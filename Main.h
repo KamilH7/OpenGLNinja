@@ -29,17 +29,26 @@ ShaderProgram* shaderProgram;
 // Vertices coordinates
 GLfloat vertices[] =
 { //     COORDINATES     /        COLORS      /   TexCoord  //
-	-0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
-	-0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 5.0f, // Upper left corner
-	 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	5.0f, 5.0f, // Upper right corner
-	 0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	5.0f, 0.0f  // Lower right corner
+	-0.5f, -0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
+	 0.5f, -0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 0.0f, // Upper left corner
+	 0.5f,  0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 1.0f, // Upper right corner
+	-0.5f,  0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 1.0f,  // Lower right corner
+
+	-0.5f, -0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
+	 0.5f, -0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 0.0f, // Upper left corner
+	 0.5f,  0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 1.0f, // Upper right corner
+	 -0.5f, 0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 1.0f  // Lower right corner
 };
 
 // Indices for vertices order
 GLuint indices[] =
 {
-	0, 2, 1, // Upper triangle
-	0, 3, 2 // Lower triangle
+	0, 1, 3, 3, 1, 2,
+	1, 5, 2, 2, 5, 6,
+	5, 4, 6, 6, 4, 7,
+	4, 0, 7, 7, 0, 3,
+	3, 2, 7, 7, 2, 6,
+	4, 5, 0, 0, 5, 1
 };
 
 #endif

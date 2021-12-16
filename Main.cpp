@@ -5,6 +5,40 @@ bool Running()
 	return !glfwWindowShouldClose(window);
 }
 
+float rotation = 0.0f;
+double prevTime = glfwGetTime();
+
+void SetupMatrices() 
+{
+	glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+	double crntTime = glfwGetTime();
+	if (crntTime - prevTime >= 1 / 60)
+	{
+		rotation += 0.5f;
+		prevTime = crntTime;
+	}
+
+	modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	glm::mat4 viewMatrix = glm::mat4(1.0f);
+	// Move the world away from the camera
+	viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.2f, -10.0f));
+
+	glm::mat4 projectionMatrix = glm::mat4(1.0f);
+	// Setup the projection matrix using perspective(fov,aspectRatio, nearPlaneDistance, farPlaneDistance)
+	projectionMatrix = glm::perspective(glm::radians(45.0f), (float)(windowWidth /windowHeight), 0.1f, 400.0f);
+
+	// Get shader mattix uniform locations 
+	int modelMatrixLocation = glGetUniformLocation(shaderProgram->ID, "modelMatrix");
+	int viewMatrixLocation = glGetUniformLocation(shaderProgram->ID, "viewMatrix");
+	int projectionMatrixLocation = glGetUniformLocation(shaderProgram->ID, "projectionMatrix");
+	
+	// Assign the pointer to the matrices to the uniforms
+	glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, value_ptr(modelMatrix));
+	glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, value_ptr(viewMatrix));
+	glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, value_ptr(projectionMatrix));
+}
 void TerminateOpenGL() 
 {
 	if(window!=NULL)
@@ -94,19 +128,23 @@ int main()
 	// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
 	glUniform1f(uniID, 0.5f);
 
+	glEnable(GL_DEPTH_TEST);
+
 	// Main while loop
 	while (Running())
 	{
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		SetupMatrices();
 		// Binds texture so that is appears in rendering
 		popCat.Bind();
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
