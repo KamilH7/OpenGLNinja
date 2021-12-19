@@ -104,6 +104,6 @@ void ShaderProgram::Activate()
 void ShaderProgram::Delete()
 {
 	glDeleteProgram(ID);
-	delete this;
 }
+	
 	
