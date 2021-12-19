@@ -15,15 +15,15 @@ void SetupMatrices()
 	double crntTime = glfwGetTime();
 	if (crntTime - prevTime >= 1 / 60)
 	{
-		rotation += 0.5f;
+		rotation += 0.1f;
 		prevTime = crntTime;
 	}
 
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+	modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 1.0f));
 
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
 	// Move the world away from the camera
-	viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.2f, -10.0f));
+	viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.2f, -3.0f));
 
 	glm::mat4 projectionMatrix = glm::mat4(1.0f);
 	// Setup the projection matrix using perspective(fov,aspectRatio, nearPlaneDistance, farPlaneDistance)

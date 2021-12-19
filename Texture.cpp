@@ -33,6 +33,8 @@ Texture::Texture(const char* imagePath, GLenum texType, GLenum textureUnit, GLen
 	glTexParameteri(type, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	// Settings for filling the texture horizontally
 	glTexParameteri(type, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// Settings for filling the texture horizontally
+	glTexParameteri(type, GL_TEXTURE_WRAP_R, GL_REPEAT);
 
 	// Assign all the data to the gl texture object
 	glTexImage2D(type, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes);

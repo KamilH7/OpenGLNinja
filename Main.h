@@ -29,15 +29,15 @@ ShaderProgram* shaderProgram;
 // Vertices coordinates
 GLfloat vertices[] =
 { //     COORDINATES     /        COLORS      /   TexCoord  //
-	-0.5f, -0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
-	 0.5f, -0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 0.0f, // Upper left corner
-	 0.5f,  0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 1.0f, // Upper right corner
-	-0.5f,  0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 1.0f,  // Lower right corner
+	-0.5f, -0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	2.0f, 0.0f, // back left down
+	 0.5f, -0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 0.0f, // back right down
+	 0.5f,  0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 2.0f, // back right up
+	-0.5f,  0.5f, -0.5f,     0.0f, 0.0f, 0.0f,	2.0f, 2.0f, // back left up
 
-	-0.5f, -0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
-	 0.5f, -0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 0.0f, // Upper left corner
-	 0.5f,  0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	1.0f, 1.0f, // Upper right corner
-	 -0.5f, 0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 1.0f  // Lower right corner
+	-0.5f, -0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 0.0f, // front left down
+	 0.5f, -0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	2.0f, 0.0f, // front right down
+	 0.5f,  0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	2.0f, 2.0f, // front right up
+	 -0.5f, 0.5f,  0.5f,     0.0f, 0.0f, 0.0f,	0.0f, 2.0f  // front left up
 };
 
 // Indices for vertices order
