@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="EBO.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Libraries\include\stb\stb_image.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Mesh.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -52,43 +52,64 @@ bool InitializeOpenGL()
 
 int main()
 {
+	Vertex vertices1[] =
+	{
+		Vertex{glm::vec3(-0.5f, 0.0f,  0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //0
+		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //1 
+		Vertex{glm::vec3(-0.5f, 1.0f,  0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f)}, //2
+		Vertex{glm::vec3(-0.5f, 1.0f, -0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f)}, //3
+		Vertex{glm::vec3(0.5f, 0.0f, -0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //4
+		Vertex{glm::vec3(0.5f, 0.0f,  0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //5
+
+		Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f)}, //6
+		Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f)}, //7
+
+		Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //8
+		Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //9
+	};
+
+	// Indices for vertices order
+	GLuint indices[] =
+	{
+		 0,1,2,2,1,3,
+		 2,3,4,4,2,5,
+		 0,1,6,6,0,7,
+		 1,8,3,
+		 9,2,0
+	};
+
 	if (!InitializeOpenGL()) 
 	{
 		TerminateOpenGL();
 		return -1;
 	}
 
-	// Texture
-	Texture boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+	DeltaTime deltaTime;
+	Game game;
 
-	// Generates Shader object using shaders default.vert and default.frag
-	ShaderProgram shaderProgram(vertexShaderPath, fragmentShaderPath);
-	std::vector <Vertex> verts(vertices1, vertices1 + sizeof(vertices1) / sizeof(Vertex));
-	Mesh mesh(verts, ind, boxTexture);
-	
-	// Generates Shader object using shaders default.vert and default.frag
-	ShaderProgram shaderProgram2(vertexShaderPath, fragmentShaderPath);
-	std::vector <Vertex> verts2(vertices2, vertices2 + sizeof(vertices2) / sizeof(Vertex));
-	Mesh mesh2(verts2, ind, boxTexture);
+	//ShaderProgram boxShaderProgram("default.vert", "default.frag");
+	//Texture boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+
+	//std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+	//std::vector <Vertex> verts(vertices1, vertices1 + sizeof(vertices1) / sizeof(Vertex));
+	//Mesh mesh(verts, ind, boxTexture);
+
+	game.Start();
 
 	glEnable(GL_DEPTH_TEST);
-
-	DeltaTime deltaTime;
 
 	// Main while loop
 	while (Running())
 	{
-		deltaTime.Calculate();
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glm::vec3 rotationaxis(0.0f,1.0f,0.0f);
 
-		mesh.Rotate(360*deltaTime.Time, rotationaxis);
-		mesh.Draw(shaderProgram);
-		mesh2.Draw(shaderProgram2);
+		//mesh.Draw(boxShaderProgram);
+
+		deltaTime.Calculate();
+		game.Update(deltaTime.Time);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -96,10 +117,7 @@ int main()
 		glfwPollEvents();
 	}
 
-	// Delete all the objects we've created
-	boxTexture.Delete();
-	shaderProgram.Delete();
-
+	game.Terminate();
 	TerminateOpenGL();
 	return 0;
 }

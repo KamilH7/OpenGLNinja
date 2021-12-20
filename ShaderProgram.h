@@ -22,6 +22,4 @@ class ShaderProgram
 		void PrintShaderErrors(GLuint ID, const char* shaderName);
 		void PrintProgramErrors(GLuint ID);
 };
-
-
 #endif

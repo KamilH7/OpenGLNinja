@@ -1,5 +1,5 @@
-#ifndef MESH_CLASS_H
-#define MESH_CLASS_H
+#ifndef MESH_H
+#define MESH_H
 
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>

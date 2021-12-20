@@ -1,28 +1,65 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include"VAO.h"
-#include"VBO.h"
-#include"EBO.h"
-#include"Texture.h"
+#include <vector>
+#include <glad/glad.h>
+#include "Vertex.h"
+#include "Texture.h"
+#include "Mesh.h"
+#include "ShaderProgram.h"
 
-#pragma once
 class Game
 {
 	public:
-		Game(ShaderProgram* shaderProgram);
+		Game() : 
+			boxShaderProgram("default.vert", "default.frag"), 
+			boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
+			vertices1
+			{ 
+				Vertex{glm::vec3(-0.5f, 0.0f,  0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //0
+				Vertex{glm::vec3(-0.5f, 0.0f, -0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //1 
+				Vertex{glm::vec3(-0.5f, 1.0f,  0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f)}, //2
+				Vertex{glm::vec3(-0.5f, 1.0f, -0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f)}, //3
+				Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //4
+				Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //5
+				Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f)}, //6
+				Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f)}, //7
+				Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //8
+				Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //9		
+			},
+			vertices2
+			{
+				Vertex{glm::vec3(0.5f, 1.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //0
+				Vertex{glm::vec3(0.5f, 1.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //1 
+				Vertex{glm::vec3(-0.5f, 1.0f,  0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f)}, //2
+				Vertex{glm::vec3(-0.5f, 1.0f, -0.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f)}, //3
+				Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //4
+				Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //5
+				Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f)}, //6
+				Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f)}, //7
+				Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f)}, //8
+				Vertex{glm::vec3(0.5f, 0.0f,  0.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f)}, //9
+			},
+			indices
+			{
+				0,1,2,2,1,3,
+				2,3,4,4,2,5,
+				0,1,6,6,0,7,
+				1,8,3,
+				9,2,0
+			}{ };
+
 		void Start();
-		void Update();
+		void Update(double deltaTime);
 		void Terminate();
 
 	private:
-		GLfloat vertices[];
-		GLfloat vertices[]
-		const char* popCatPath = "Resources/pop_cat.png";
-		ShaderProgram* shaderProgram;
-		Texture* popCat;
-		VAO* VAO1;
-		VBO* VBO1;
-		EBO* EBO1;
+		Vertex vertices1[10];
+		Vertex vertices2[10];
+		GLuint indices[24];
+		Texture boxTexture;
+		ShaderProgram boxShaderProgram;
+		std::vector<Mesh*> meshes;
 };
+
 #endif

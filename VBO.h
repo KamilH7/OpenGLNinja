@@ -1,17 +1,9 @@
-#ifndef VBO_CLASS_H
-#define VBO_CLASS_H
+#ifndef VBO_H
+#define VBO_H
 
 #include<glad/glad.h>
-#include<glm/glm.hpp>
 #include<vector>
-
-// This structure holds all of the vertex information
-struct Vertex
-{
-	glm::vec3 postion;
-	glm::vec3 color;
-	glm::vec2 textureCoordinates;
-};
+#include "Vertex.h"
 
 class VBO
 {

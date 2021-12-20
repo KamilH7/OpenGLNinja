@@ -1,5 +1,5 @@
-#ifndef TEXTURE_CLASS_H
-#define TEXTURE_CLASS_H
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
 #include<glad/glad.h>
 #include<stb/stb_image.h>
