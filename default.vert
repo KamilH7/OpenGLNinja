@@ -8,25 +8,26 @@ layout (location = 1) in vec3 aColor;
 layout (location = 2) in vec2 aTex;
 
 
+out vec3 crntPos;
 // Outputs the color for the Fragment Shader
 out vec3 color;
 // Outputs the texture coordinates to the fragment shader
 out vec2 texCoord;
 
-// Controls the scale of the vertices
-uniform float scale;
 
 // Matrix importing
 uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
+uniform mat4 camMatrix;
 
 void main()
 {
-	// Outputs the positions/coordinates of all vertices
-	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos,1.0);
+	crntPos = vec3( modelMatrix * vec4(aPos,1.0f));
+
 	// Assigns the colors from the Vertex Data to "color"
 	color = aColor;
 	// Assigns the texture coordinates from the Vertex Data to "texCoord"
-	texCoord = aTex;
+	texCoord = mat2(0.0, -1.0, 1.0, 0.0) * aTex;
+
+	// Outputs the positions/coordinates of all vertices
+	gl_Position = camMatrix * vec4(crntPos ,1.0);
 }

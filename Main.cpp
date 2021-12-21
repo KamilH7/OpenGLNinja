@@ -85,16 +85,8 @@ int main()
 	}
 
 	DeltaTime deltaTime;
-	Game game;
-
-	//ShaderProgram boxShaderProgram("default.vert", "default.frag");
-	//Texture boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-
-	//std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
-	//std::vector <Vertex> verts(vertices1, vertices1 + sizeof(vertices1) / sizeof(Vertex));
-	//Mesh mesh(verts, ind, boxTexture);
-
-	game.Start();
+	Game game(window);
+	game.Start(windowWidth,windowHeight,window);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -105,8 +97,6 @@ int main()
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//mesh.Draw(boxShaderProgram);
 
 		deltaTime.Calculate();
 		game.Update(deltaTime.Time);

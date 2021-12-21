@@ -3,15 +3,20 @@
 
 #include <vector>
 #include <glad/glad.h>
+#include <glm/gtx/string_cast.hpp>
+
 #include "Vertex.h"
 #include "Texture.h"
 #include "Mesh.h"
 #include "ShaderProgram.h"
+#include "Camera.h"
+#include "HoverDetector.h"
 
 class Game
 {
 	public:
-		Game() : 
+		Game(GLFWwindow* window) : 
+			window(window),
 			boxShaderProgram("default.vert", "default.frag"), 
 			boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
 			vertices1
@@ -47,13 +52,18 @@ class Game
 				0,1,6,6,0,7,
 				1,8,3,
 				9,2,0
-			}{ };
+			}
+			{ };
 
-		void Start();
+		void Start(double width, double height, GLFWwindow* window);
 		void Update(double deltaTime);
 		void Terminate();
-
+		void MouseButtonClicked(double xPos, double yPos);
 	private:
+		void HandleInput();
+		HoverDetector hoverDetector;
+		GLFWwindow* window;
+		Camera* camera;
 		Vertex vertices1[10];
 		Vertex vertices2[10];
 		GLuint indices[24];

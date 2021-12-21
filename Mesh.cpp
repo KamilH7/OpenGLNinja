@@ -1,44 +1,27 @@
 #include "Mesh.h"
 
-void Mesh::SetupMatrices()
-{
-	// Move the world away from the camera
-	viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.5f, -3.0f));
-	// Setup the projection matrix using perspective(fov,aspectRatio, nearPlaneDistance, farPlaneDistance)
-	projectionMatrix = glm::perspective(glm::radians(45.0f), (float)(800 / 800), 0.1f, 400.0f);
-}
-
 void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 {
-	// Get shader mattix uniform locations 
-	int modelMatrixLocation = glGetUniformLocation(shaderProgram.ID, "modelMatrix");
-	int viewMatrixLocation = glGetUniformLocation(shaderProgram.ID, "viewMatrix");
-	int projectionMatrixLocation = glGetUniformLocation(shaderProgram.ID, "projectionMatrix");
-
-	// Assign the pointer to the matrices to the uniforms
-	glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, value_ptr(modelMatrix));
-	glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, value_ptr(viewMatrix));
-	glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, value_ptr(projectionMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 }
 
-void Mesh::SetRotation(float rotation, glm::vec3& axis)
+void Mesh::Rotate(glm::vec3 rotationAxis, float angle)
 {
-	currentRotation = rotation;
-	modelMatrix = glm::mat4(1.0f);
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(currentRotation), axis);
+	modelMatrix = glm::rotate(modelMatrix,angle,rotationAxis);
 }
 
-void Mesh::Rotate(float rotation, glm::vec3& axis)
+void Mesh::Translate(glm::vec3 translation)
 {
-	currentRotation += rotation;
-	modelMatrix = glm::mat4(1.0f);
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(currentRotation), axis);
+	modelMatrix = glm::translate(modelMatrix, translation);
 }
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture) : vertices(vertices), indices(indices), texture(texture), m(1.0f), v(1.0f), p(1.0f)
+void Mesh::Scale(glm::vec3 scale)
 {
-	SetupMatrices();
+	modelMatrix = glm::scale(modelMatrix, scale);
+}
 
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture) : vertices(vertices), indices(indices), texture(texture)
+{
 	// Generates Vertex Buffer Object and links it to vertices
 	VBO VBO(vertices);
 	// Generates Element Buffer Object and links it to indices
@@ -61,15 +44,20 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture&
 	EBO.Unbind();
 }
 
-void Mesh::Draw(ShaderProgram& shader)
+void Mesh::Draw(ShaderProgram& shader, Camera* camera)
 {
 	shader.Activate();
 	VAO.Bind();
+
 	AssignMatrices(shader);
+	camera -> AssignMatrix(shader, "camMatrix");
 
 	texture.texUnit(shader, "tex0", 0);
 	texture.Bind();
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+	VAO.Unbind();
+	texture.Unbind();
 
 }
