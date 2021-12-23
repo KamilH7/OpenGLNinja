@@ -2,22 +2,33 @@
 
 void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 {
+	glm::mat4 rotationMatrix(1.0f);
+	
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f),position);
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
+
+	modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 }
 
-void Mesh::Rotate(glm::vec3 rotationAxis, float angle)
+void Mesh::Rotate(glm::vec3 rotation)
 {
-	modelMatrix = glm::rotate(modelMatrix,angle,rotationAxis);
+	Mesh::rotation += rotation;
 }
 
-void Mesh::Translate(glm::vec3 translation)
+void Mesh::Translate(glm::vec3 position)
 {
-	modelMatrix = glm::translate(modelMatrix, translation);
+	Mesh::position += position;
 }
 
 void Mesh::Scale(glm::vec3 scale)
 {
-	modelMatrix = glm::scale(modelMatrix, scale);
+	Mesh::scale += scale;
 }
 
 Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture) : vertices(vertices), indices(indices), texture(texture)

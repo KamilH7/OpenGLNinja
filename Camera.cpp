@@ -95,7 +95,7 @@ void Camera::Inputs(GLFWwindow* window)
 			Orientation = newOrientation;
 		}
 
-		// Rotates the Orientation left and right
+		// Rotates the Orientation left and rights
 		Orientation = glm::rotate(Orientation, glm::radians(-rotY), Up);
 
 		// Sets mouse cursor to the middle of the screen so that it doesn't end up roaming around

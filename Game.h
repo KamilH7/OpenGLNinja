@@ -58,7 +58,7 @@ class Game
 		void Start(double width, double height, GLFWwindow* window);
 		void Update(double deltaTime);
 		void Terminate();
-		void MouseButtonClicked(double xPos, double yPos);
+		void ZeroClicked();
 	private:
 		void HandleInput();
 		HoverDetector hoverDetector;

@@ -22,14 +22,6 @@ void Game::Update(double deltaTime)
 
 	HandleInput();
 
-	glm::vec3 rotationaxis(0.0f, 0.0f, 1.0f);
-
-	meshes.at(0) -> Translate(glm::vec3(1 * deltaTime,0,0));
-	meshes.at(1) -> Translate(glm::vec3(1 * deltaTime,0,0));
-	//meshes.at(0) -> Rotate( rotationaxis, -1 * deltaTime);
-	//meshes.at(1) -> Rotate( rotationaxis, -1 * deltaTime);
-
-
 	for (Mesh* mesh : meshes)
 		mesh->Draw(boxShaderProgram, camera);
 }
@@ -37,16 +29,48 @@ void Game::Update(double deltaTime)
 void Game::HandleInput()
 {
 	camera->Inputs(window);
-
-	int state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
 
 	hoverDetector.Update(camera, xpos, ypos);
 
-	if (state == GLFW_PRESS)
+	int zero = glfwGetKey(window, GLFW_KEY_0);
+	if (zero == GLFW_PRESS)
 	{
-		//MouseButtonClicked(xpos, ypos);
+		glm::vec3 rotationaxis(1.0f, 0.0f, 0.0f);
+		meshes.at(0)->Rotate(rotationaxis * 0.01f);
+	}
+
+	int one = glfwGetKey(window, GLFW_KEY_1);
+	if (one == GLFW_PRESS)
+	{
+		glm::vec3 rotationaxis(0.0f, 1.0f, 0.0f);
+		meshes.at(0)->Rotate(rotationaxis * 0.01f);
+	}
+
+	int two = glfwGetKey(window, GLFW_KEY_2);
+	if (two == GLFW_PRESS)
+	{
+		glm::vec3 rotationaxis(0.0f, 0.0f, 1.0f);
+		meshes.at(0)->Rotate(rotationaxis * 0.01f);
+	}
+
+	int three = glfwGetKey(window, GLFW_KEY_3);
+	if (three == GLFW_PRESS)
+	{
+		meshes.at(0)->Translate(glm::vec3(0, 1 * 0.01f, 0));
+	}
+
+	int four = glfwGetKey(window, GLFW_KEY_4);
+	if (four == GLFW_PRESS)
+	{
+		meshes.at(0)->Translate(glm::vec3(1 * 0.01f, 0, 0));
+	}
+
+	int five = glfwGetKey(window, GLFW_KEY_5);
+	if (five == GLFW_PRESS)
+	{
+		meshes.at(0)->Translate(glm::vec3(0, 0, 1 * 0.01f));
 	}
 }
 
@@ -55,9 +79,4 @@ void Game::Terminate()
 	boxShaderProgram.Delete();
 	boxTexture.Delete();
 	delete camera;
-}
-
-void Game::MouseButtonClicked(double xPos, double yPos) 
-{
-	std::cout<<"("<< xPos<<","<<yPos<<")"<<endl;
 }

@@ -3,6 +3,7 @@
 
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/quaternion.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
 #include "VBO.h"
@@ -17,20 +18,18 @@ class Mesh
 public:
 	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture);
 	void Draw(ShaderProgram& shader, Camera* camera);
-	void Rotate(glm::vec3 rotationAxis, float angle);
+	void Rotate(glm::vec3 euler);
 	void Translate(glm::vec3 translation);
 	void Scale(glm::vec3 scale);
-
 private:
+	glm::mat4 modelMatrix = glm::mat4(1.0f);
+	glm::vec3 rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 position = glm::vec3(0.0f);
+	glm::vec3 scale = glm::vec3(1.0f,1.0f,2.0f);
 	VAO VAO;
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;
 	Texture texture;
-
-	glm::mat4 modelMatrix = glm::mat4(1.0f);
-	glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-	glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	void AssignMatrices(ShaderProgram& shaderProgram);
 };

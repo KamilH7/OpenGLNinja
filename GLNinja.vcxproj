@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\kamil\source\repos\GLNinja\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\kamil\source\repos\GLNinja\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\kamil\source\repos\GLNinja\GLNinja\Libraries\include</IncludePath>
+    <LibraryPath>C:\Users\kamil\source\repos\GLNinja\GLNinja\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="EBO.cpp" />
@@ -167,6 +168,7 @@
     <Image Include="Resources\pop_cat.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="EBO.h" />
