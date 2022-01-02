@@ -7,13 +7,13 @@
 
 	 if (detached) 
 	 {
-		 firstHalf.Translate(direction * (float)deltaTime * speed);
-		 secondHalf.Translate(glm::vec3(-direction.x,direction.y,-direction.z) * (float)deltaTime * speed);
+		 firstHalf->Translate(direction * (float)deltaTime * speed);
+		 secondHalf->Translate(glm::vec3(-direction.x,direction.y,-direction.z) * (float)deltaTime * speed);
 	 }
 	 else
 	 {
-		 firstHalf.Translate(direction * (float)deltaTime * speed);
-		 secondHalf.Translate(direction * (float)deltaTime * speed);
+		 firstHalf->Translate(direction * (float)deltaTime * speed);
+		 secondHalf->Translate(direction * (float)deltaTime * speed);
 	 }
 
 	 DrawBox(camera);
@@ -21,8 +21,8 @@
 
  void Box::DrawBox(Camera * camera)
  {
-	 firstHalf . Draw(boxShaderProgram, camera);
-	 secondHalf . Draw(boxShaderProgram, camera);
+	 firstHalf->Draw(boxShaderProgram, camera);
+	 secondHalf->Draw(boxShaderProgram, camera);
  }
 
  void Box::Detach()
@@ -32,7 +32,7 @@
 
  bool Box::CheckBounds() 
  {
-	 if (firstHalf.Position.y < -4 || secondHalf.Position.y < -4)
+	 if (firstHalf->Position.y < -4 || secondHalf->Position.y < -4)
 	 {
 		 return true;
 	 }
@@ -43,8 +43,8 @@
  {
 	 startPosition = glm::vec3(4, -1, -4);
 	 startPosition.y = glm::linearRand(-1, 0);
-	 firstHalf.Translate(startPosition);
-	 secondHalf.Translate(startPosition);
+	 firstHalf->Translate(startPosition);
+	 secondHalf->Translate(startPosition);
 	 direction = glm::vec3(-1, 2, 0);
 	 direction.x = glm::linearRand(-3, -2);
 	 direction.y = glm::linearRand(1, 3);

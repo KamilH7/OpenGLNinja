@@ -39,7 +39,7 @@ void CollisionDetector::Update(Camera* camera, double mouseX, double mouseY)
 
 void CollisionDetector::IsColliding(Box* box)
 {
-	glm::vec3 sphereCenter = box->firstHalf.Position;
+	glm::vec3 sphereCenter = box->firstHalf->Position;
 	float sphereRadius = 1;
 	float pd = glm::dot(sphereCenter - rayOrigin, rayDirection);
 	glm::vec3 p = rayOrigin + rayDirection * pd;
