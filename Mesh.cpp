@@ -8,7 +8,7 @@ void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f),position);
+	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f),Position);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
 
 	modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
@@ -23,7 +23,7 @@ void Mesh::Rotate(glm::vec3 rotation)
 
 void Mesh::Translate(glm::vec3 position)
 {
-	Mesh::position += position;
+	Mesh::Position += position;
 }
 
 void Mesh::Scale(glm::vec3 scale)

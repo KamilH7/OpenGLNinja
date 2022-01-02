@@ -1,6 +1,6 @@
 #include "HoverDetector.h"
 
-void HoverDetector::Update(Camera* camera, double mouseX, double mouseY)
+void CollisionDetector::Update(Camera* camera, double mouseX, double mouseY)
 {
 	int screenWidth = camera->Width;
 	int screenHeight = camera->Height;
@@ -35,5 +35,20 @@ void HoverDetector::Update(Camera* camera, double mouseX, double mouseY)
 
 	glm::vec4 cameraPosition(camera->Position.x, camera->Position.y, camera->Position.z,0);
 	rayOrigin = cameraPosition;
+}
+
+void CollisionDetector::IsColliding(Box* box)
+{
+	glm::vec3 sphereCenter = box->firstHalf.Position;
+	float sphereRadius = 1;
+	float pd = glm::dot(sphereCenter - rayOrigin, rayDirection);
+	glm::vec3 p = rayOrigin + rayDirection * pd;
+
+	float distance = glm::length(glm::abs(sphereCenter - p));
+
+	if (distance < sphereRadius) 
+	{
+		box -> Detach();
+	}
 
 }

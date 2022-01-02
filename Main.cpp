@@ -38,6 +38,7 @@ bool InitializeOpenGL()
 		return false;
 	}
 
+
 	// Tell GLFW to use the newly created window
 	glfwMakeContextCurrent(window);
 
