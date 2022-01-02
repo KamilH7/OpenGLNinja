@@ -3,6 +3,8 @@
 void Game::Start(double width, double height, GLFWwindow* window)
 {
 	camera = new Camera(width, height, glm::vec3(0.0f, 0.5f, 5.0f));
+	Box* box = new Box();
+	boxes.push_back(box);
 }
 
 void Game::Update(double deltaTime)
@@ -13,15 +15,16 @@ void Game::Update(double deltaTime)
 	for (int i = 0; i< boxes.size(); i++) 
 	{
 		boxes[i]->Update(camera, deltaTime);
-		//collisionDetector.IsColliding(boxes[i]);
+		collisionDetector.IsColliding(boxes[i]);
 
-		//if (boxes[i]->CheckBounds()) 
-		//{
-		//	delete boxes[i];
-		//	//remove box from a vector
-		//	boxes.erase(boxes.begin()+i);
-		//	i--;
-		//}
+		if (boxes[i]->CheckBounds()) 
+		{
+			boxes[i]->Destroy();
+			delete boxes[i];
+			//remove box from a vector
+			boxes.erase(boxes.begin()+i);
+			i--;
+		}
 	}
 }
 
@@ -36,7 +39,7 @@ void Game::HandleInput()
 	int zero = glfwGetKey(window, GLFW_KEY_0);
 	if (zero == GLFW_PRESS)
 	{
-		Box* box = new Box(boxShaderProgram,boxTexture);
+		Box* box = new Box();
 		boxes.push_back(box);
 	}
 }

@@ -21,8 +21,8 @@
 
  void Box::DrawBox(Camera * camera)
  {
-	 firstHalf.Draw(boxShaderProgram, camera);
-	 secondHalf.Draw(boxShaderProgram, camera);
+	 firstHalf . Draw(boxShaderProgram, camera);
+	 secondHalf . Draw(boxShaderProgram, camera);
  }
 
  void Box::Detach()
@@ -49,4 +49,9 @@
 	 direction.x = glm::linearRand(-3, -2);
 	 direction.y = glm::linearRand(1, 3);
 	 speed = glm::linearRand(2, 4);
+ }
+ void Box::Destroy() 
+ {
+	 boxShaderProgram.Delete();
+	 boxTexture.Delete();
  }

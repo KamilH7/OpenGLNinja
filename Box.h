@@ -6,7 +6,7 @@
 class Box
 {
 public:
-	Box(ShaderProgram shaderProgram, Texture texture) :
+	Box(Mesh firstHalf, Mesh secondHalf) :
 		boxShaderProgram("default.vert", "default.frag"),
 		boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
 		vertices1
@@ -48,7 +48,7 @@ public:
 		verts2(vertices2, vertices2 + sizeof(vertices2) / sizeof(Vertex)),
 		firstHalf(verts, ind, boxTexture),
 		secondHalf(verts2, ind, boxTexture)
-	{ 
+	{ 	
 		RandomizeBox();
 		firstHalf.Translate(startPosition);
 		secondHalf.Translate(startPosition);
@@ -57,13 +57,14 @@ public:
 	void Update(Camera* camera, double deltaTime);
 	Mesh firstHalf;
 	Mesh secondHalf;
-
 	void Detach();
+	void Destroy();
 	bool CheckBounds();
 private:
 	std::vector <GLuint> ind;
 	std::vector <Vertex> verts;
 	std::vector <Vertex> verts2;
+
 	bool detached = false;
 	void RandomizeBox();
 	void DrawBox(Camera* camera);
