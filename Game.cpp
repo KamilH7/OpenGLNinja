@@ -9,8 +9,14 @@ void Game::Start(double width, double height, GLFWwindow* window)
 
 void Game::Update(double deltaTime)
 {
+	timer -= (float)deltaTime;
+
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
+	collisionDetector.Update(camera, xpos, ypos);
+
 	camera->UpdateMatrix(45.0f,0.1f,200.0f);
-	HandleInput();
+	SpawnBoxes();
 
 	for (int i = 0; i< boxes.size(); i++) 
 	{
@@ -28,17 +34,11 @@ void Game::Update(double deltaTime)
 	}
 }
 
-void Game::HandleInput()
+void Game::SpawnBoxes()
 {
-	camera->Inputs(window);
-	double xpos, ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
-
-	collisionDetector.Update(camera, xpos, ypos);
-
-	int zero = glfwGetKey(window, GLFW_KEY_0);
-	if (zero == GLFW_PRESS)
+	if (timer <= 0) 
 	{
+		timer = currentTimer;
 		Box* box = new Box();
 		boxes.push_back(box);
 	}

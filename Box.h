@@ -66,9 +66,15 @@ private:
 
 	bool detached = false;
 	void RandomizeBox();
+	void SpawnLeft();
+	void SpawnRight();
+	void SpawnDown();
+	void SpawnUp();
+
 	void DrawBox(Camera* camera);
 
-	glm::vec3 direction = glm::vec3(0,0,0);
+	glm::vec3 moveDirection = glm::vec3(0,0,0);
+	glm::vec3 rotationDirection = glm::vec3(0,0,0);
 	glm::vec3 startPosition = glm::vec3(4, -1, -4);
 	
 	float gravityPull = 0.8;

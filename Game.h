@@ -21,7 +21,9 @@ class Game
 		void Update(double deltaTime);
 		void Terminate();
 	private:
-		void HandleInput();
+		void SpawnBoxes();
+		float timer = 1;
+		float currentTimer = 1;
 		std::vector<Box*> boxes;
 		CollisionDetector collisionDetector;
 		GLFWwindow* window;

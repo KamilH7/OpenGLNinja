@@ -3,10 +3,14 @@
 void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 {
 	glm::mat4 rotationMatrix(1.0f);
-	
+	glm::vec4 rotationVector(1.0f);
+
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	glm::vec4 result = rotationMatrix * rotationVector;
+	Direction = glm::vec3(result.x, result.y, result.z);
 
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f),Position);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
