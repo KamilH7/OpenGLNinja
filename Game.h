@@ -18,8 +18,10 @@ class Game
 		bool paused;
 		Game(GLFWwindow* window) :
 			window(window),
-			bgShaderProgram("default.vert", "default.frag"),
+			UIShaderProgram("default.vert", "default.frag"),
 			bgTexture("Resources/dojo.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
+			buttonTexture("Resources/button.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
+			buttonHoverTexture("Resources/buttonHover.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
 			bgVerts
 			{
 				Vertex{ glm::vec3(1.0f, 1.0f,   -6.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f) }, //0
@@ -28,6 +30,17 @@ class Game
 				Vertex{ glm::vec3(-1.0f, -1.0f, -6.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f) }, //3
 			},
 			bgInds
+			{
+				0,1,2,2,1,3
+			},
+			buttonVerts
+			{
+				Vertex{ glm::vec3(1.0f, 1.0f,   -6.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 0.0f) }, //0
+				Vertex{ glm::vec3(1.0f, -1.0f,  -6.5f),     glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 0.0f) }, //1 
+				Vertex{ glm::vec3(-1.0f, 1.0f,  -6.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(0.0f, 1.0f) }, //2
+				Vertex{ glm::vec3(-1.0f, -1.0f, -6.5f),    glm::vec3(0.0f, 0.0f, 0.0f),	glm::vec2(1.0f, 1.0f) }, //3
+			},
+			buttonInds
 			{
 				0,1,2,2,1,3
 			}
@@ -49,12 +62,21 @@ class Game
 		float currentBoxSpawnTimer = 1;
 		std::vector<Box*> boxes;
 
-		//background
-		Mesh* backgroundImage;
-		ShaderProgram bgShaderProgram;
-		Texture bgTexture;
-		Vertex bgVerts[10];
-		GLuint bgInds[24];
+		//background and button variables
+		ShaderProgram UIShaderProgram;
+
+			//button
+			Mesh* backgroundMesh;
+			Texture bgTexture;
+			Vertex bgVerts[4];
+			GLuint bgInds[6];
+
+			//background
+			Mesh* buttonMesh;
+			Texture buttonTexture;
+			Texture buttonHoverTexture;
+			Vertex buttonVerts[4];
+			GLuint buttonInds[6];
 
 		CollisionDetector collisionDetector;
 		GLFWwindow* window;

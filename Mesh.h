@@ -22,6 +22,7 @@ public:
 	void Rotate(glm::vec3 euler);
 	void Translate(glm::vec3 translation);
 	void ChangeScale(glm::vec3 scale);
+	void ChangeTextue(Texture& texture);
 	glm::vec3 Position = glm::vec3(0.0f);
 	glm::vec3 Direction = glm::vec3(1.0f, 0.0f, 0.0f);
 	glm::vec3 Scale = glm::vec3(1.0f, 1.0f, 1.0f);

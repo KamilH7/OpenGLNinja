@@ -1,19 +1,28 @@
 #include "Game.h"
 
+//runs only at the start of the program
 void Game::Start(double width, double height, GLFWwindow* window)
 {
+	//generate background mesh
 	std::vector <GLuint> ind(bgInds, bgInds + sizeof(bgInds) / sizeof(GLuint));
 	std::vector <Vertex> verts(bgVerts, bgVerts + sizeof(bgVerts) / sizeof(Vertex));
-	backgroundImage = new Mesh(verts, ind, bgTexture);
-	backgroundImage -> ChangeScale(glm::vec3(6, 6, 1));
+	backgroundMesh = new Mesh(verts, ind, bgTexture);
+	backgroundMesh -> ChangeScale(glm::vec3(6, 6, 1));
+
+	//generate button mesh
+	std::vector <GLuint> ind2(buttonInds, buttonInds + sizeof(buttonInds) / sizeof(GLuint));
+	std::vector <Vertex> verts2(buttonVerts, buttonVerts + sizeof(buttonVerts) / sizeof(Vertex));
+	buttonMesh = new Mesh(verts2, ind2, buttonTexture);
+
+	//create camera object
 	camera = new Camera(width, height, glm::vec3(0.0f, 0.5f, 5.0f));
-	Box* box = new Box();
-	boxes.push_back(box);
 }
 
+
+//Update that is called every frame when the game is paused
 void Game::PausedUpdate() 
 {
-	backgroundImage->Draw(bgShaderProgram, camera);
+	backgroundMesh->Draw(UIShaderProgram, camera);
 
 	int state = glfwGetKey(window, GLFW_KEY_P);
 
@@ -23,9 +32,10 @@ void Game::PausedUpdate()
 	}
 }
 
+//Update that is called every frame when the game is running
 void Game::Update(double deltaTime)
 {
-	backgroundImage->Draw(bgShaderProgram,camera);
+	backgroundMesh->Draw(UIShaderProgram,camera);
 
 	boxSpawnTimer -= (float)deltaTime;
 

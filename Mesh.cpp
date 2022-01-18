@@ -20,6 +20,11 @@ void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 }
 
+void Mesh::ChangeTextue(Texture& texture) 
+{
+	Mesh::texture = texture;
+}
+
 void Mesh::Rotate(glm::vec3 rotation)
 {
 	Mesh::rotation += rotation;
