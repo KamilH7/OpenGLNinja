@@ -1,45 +1,5 @@
 #include "Mesh.h"
 
-void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
-{
-	glm::mat4 rotationMatrix(1.0f);
-	glm::vec4 rotationVector(-1.0f,0.0f,0.0f,0.0f);
-
-	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-
-	glm::vec4 result = rotationMatrix * rotationVector;
-	Direction = glm::vec3(result.x, result.y, result.z);
-
-	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f),Position);
-	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
-
-	modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
-}
-
-void Mesh::ChangeTextue(Texture& texture) 
-{
-	Mesh::texture = texture;
-}
-
-void Mesh::Rotate(glm::vec3 rotation)
-{
-	Mesh::rotation += rotation;
-}
-
-void Mesh::Translate(glm::vec3 position)
-{
-	Mesh::Position += position;
-}
-
-void Mesh::ChangeScale(glm::vec3 scale)
-{
-	Mesh::Scale = scale;
-}
-
 Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture) : vertices(vertices), indices(indices), texture(texture)
 {
 	// Generates Vertex Buffer Object and links it to vertices
@@ -80,4 +40,52 @@ void Mesh::Draw(ShaderProgram& shader, Camera* camera)
 	VAO.Unbind();
 	texture.Unbind();
 
+}
+
+void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
+{
+	//clear any rotation;
+	glm::mat4 rotationMatrix(1.0f);
+	glm::vec4 rotationVector(-1.0f, 0.0f, 0.0f, 0.0f);
+
+	//rotate the rotation matrix
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	//calculate facing direction
+	glm::vec4 facingVector = rotationMatrix * rotationVector;
+	Rotation = glm::vec3(facingVector.x, facingVector.y, facingVector.z);
+
+	//translate the translation matrix
+	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), Position);
+
+	//sclale the scale matrix
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
+
+	//calculate the model matrix
+	modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+
+	//update the model matrix uniform for the shader to use
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+}
+
+void Mesh::SetTextue(Texture& texture)
+{
+	Mesh::texture = texture;
+}
+
+void Mesh::Rotate(glm::vec3 rotation)
+{
+	Mesh::rotation += rotation;
+}
+
+void Mesh::Translate(glm::vec3 position)
+{
+	Mesh::Position += position;
+}
+
+void Mesh::ChangeScale(glm::vec3 scale)
+{
+	Mesh::Scale = scale;
 }

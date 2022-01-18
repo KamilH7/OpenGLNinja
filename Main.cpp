@@ -25,7 +25,7 @@ bool InitializeOpenGL()
 	// Initialize GLFW
 	glfwInit();
 
-	// Give GLFW information about our environment 
+	// Give GLFW information about the environment 
 	SetupHints();
 
 	// Create a window object with desired parameters
@@ -63,12 +63,14 @@ int main()
 	Game game(window);
 	game.Start(windowWidth,windowHeight,window);
 
+	// Enable Depth
 	glEnable(GL_DEPTH_TEST);
 
 
 	// Main while loop
 	while (Running())
 	{
+		
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
@@ -91,7 +93,6 @@ int main()
 		glfwPollEvents();
 	}
 
-	game.Terminate();
 	TerminateOpenGL();
 	return 0;
 }

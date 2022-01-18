@@ -11,9 +11,11 @@ class CollisionDetector
 {
 	public:
 		void Update(Camera* camera, double mouseX, double mouseY);
+		bool IsMouseHovering(Mesh* mesh);
+
+	private:
 		glm::vec3 rayDirection;
 		glm::vec3 rayOrigin;
-		void HandleMouseCollision(Box* box);
 };
 
 #endif

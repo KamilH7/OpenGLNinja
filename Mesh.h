@@ -16,16 +16,16 @@
 class Mesh
 {
 public:
-
 	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture);
 	void Draw(ShaderProgram& shader, Camera* camera);
 	void Rotate(glm::vec3 euler);
 	void Translate(glm::vec3 translation);
 	void ChangeScale(glm::vec3 scale);
-	void ChangeTextue(Texture& texture);
+	void SetTextue(Texture& texture);
 	glm::vec3 Position = glm::vec3(0.0f);
-	glm::vec3 Direction = glm::vec3(1.0f, 0.0f, 0.0f);
+	glm::vec3 Rotation = glm::vec3(1.0f, 0.0f, 0.0f);
 	glm::vec3 Scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
 private:
 	VAO VAO;
 	Texture texture;

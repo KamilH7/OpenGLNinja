@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<glad/glad.h>
+#include<glut/glut.h>
 
 #include"Game.h"
 #include"DeltaTime.h"

@@ -1,10 +1,10 @@
 #include "HoverDetector.h"
 
+//function that transforms mouse position into world coordinates and calculates a ray origin and direction that the mouse would produce.
 void CollisionDetector::Update(Camera* camera, double mouseX, double mouseY)
 {
 	int screenWidth = camera->Width;
 	int screenHeight = camera->Height;
-
 	glm::mat4 viewMatrix = camera -> ViewMatrix;
 	glm::mat4 projectionMatrix = camera ->ProjectionMatrix;
 
@@ -30,25 +30,30 @@ void CollisionDetector::Update(Camera* camera, double mouseX, double mouseY)
 	//calculate world coordinates
 	glm::vec4 worldCoords = invertedViewMatrix * eyeCoords;
 
+	//assign the direction of the ray
 	rayDirection = glm::vec3(worldCoords.x,worldCoords.y,worldCoords.z);
 	rayDirection = glm::normalize(rayDirection);
 
+	//assign the position of the ray
 	glm::vec4 cameraPosition(camera->Position.x, camera->Position.y, camera->Position.z,0);
 	rayOrigin = cameraPosition;
 }
 
-void CollisionDetector::HandleMouseCollision(Box* box)
+//function returns true if a mesh is colliding with the mouse ray
+bool CollisionDetector::IsMouseHovering(Mesh* mesh)
 {
-	glm::vec3 sphereCenter = box->firstHalf->Position;
+	//ray intersection with an abstract sphere check
+
 	float sphereRadius = 1;
+	glm::vec3 sphereCenter = mesh -> Position;
 	float pd = glm::dot(sphereCenter - rayOrigin, rayDirection);
 	glm::vec3 p = rayOrigin + rayDirection * pd;
-
 	float distance = glm::length(glm::abs(sphereCenter - p));
 
-	if (distance < sphereRadius) 
+	if (distance < sphereRadius)
 	{
-		box -> Detach();
+		return true;
 	}
 
+	return false;
 }

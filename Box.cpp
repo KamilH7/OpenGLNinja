@@ -1,6 +1,6 @@
 #include "Box.h"
 
-
+//function that updates the box
  void Box::Update(Camera* camera, double deltaTime)
 {
 	 moveDirection.y -= gravityPull * deltaTime;
@@ -8,7 +8,7 @@
 	 firstHalf->Rotate(rotationDirection * (float) deltaTime);
 	 secondHalf->Rotate(rotationDirection * (float) deltaTime);
 
-	 if (detached) 
+	 if (isBroken) 
 	 {
 		 firstHalf->Translate(moveDirection * (float)deltaTime * speed);
 		 secondHalf->Translate(glm::vec3(-moveDirection.x, moveDirection.y, -moveDirection.z) * (float)deltaTime * speed);
@@ -25,19 +25,21 @@
 	 DrawBox(camera);
 }
 
+//function that draws the box
  void Box::DrawBox(Camera * camera)
  {
 	 firstHalf->Draw(meshShaderProgram, camera);
 	 secondHalf->Draw(meshShaderProgram, camera);
  }
 
- void Box::Detach()
+ //function that detaches 
+ void Box::Break()
  {
-	 detached = true;
-	 moveDirection = firstHalf->Direction;
+	 isBroken = true;
+	 moveDirection = firstHalf->Rotation;
  }
 
- 
+ //function that checks if the box is under bounds
  bool Box::UnderBounds()
  {
 	 if (firstHalf->Position.y < -6 || secondHalf->Position.y < -6)
@@ -48,7 +50,8 @@
 	 return false;
  } 
 
- bool Box::ScaledToZero()
+ //function that checks if the box is scaled to the point of invisibility
+ bool Box::IsInvisible()
  {
 	 if (firstHalf->Scale.x < 0.1) 
 	 {
@@ -58,6 +61,7 @@
 	 return false;
  }
 
+ //function that randomizes the boxes starting variables
  void Box::RandomizeBox()
  {
 	 rotationDirection.x = glm::linearRand(-1.0f, 1.0f);
@@ -78,6 +82,7 @@
 	 secondHalf->Translate(startPosition);
  }
 
+ //functions that spawn the box on certain sides of the map
  void Box::SpawnRight() 
  {
 	 startPosition = glm::vec3(5, 0, -4);

@@ -1,16 +1,15 @@
 #version 330 core
 
-// Outputs colors in RGBA
+// pa
 out vec4 FragColor;
 
-
-// Inputs the color from the Vertex Shader
+// vertex color from the vertex shader
 in vec3 color;
 
-// Inputs the texture coordinates from the Vertex Shader
+// texture coordinates from the vertex shader
 in vec2 texCoord;
 
-// Gets the Texture Unit from the main function
+// texture unit reference that is passed in the main class
 uniform sampler2D tex0;
 
 
