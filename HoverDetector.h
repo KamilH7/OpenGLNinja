@@ -13,7 +13,7 @@ class CollisionDetector
 		void Update(Camera* camera, double mouseX, double mouseY);
 		glm::vec3 rayDirection;
 		glm::vec3 rayOrigin;
-		void IsColliding(Box* box);
+		void HandleMouseCollision(Box* box);
 };
 
 #endif

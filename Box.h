@@ -6,8 +6,12 @@
 class Box
 {
 public:
+	Mesh* firstHalf;
+	Mesh* secondHalf;
+	bool detached = false;
+	bool pointAdded = false;
 	Box() :
-		boxShaderProgram("default.vert", "default.frag"),
+		meshShaderProgram("default.vert", "default.frag"),
 		boxTexture("Resources/box2.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE),
 		vertices1
 	{
@@ -42,29 +46,41 @@ public:
 		0,1,6,6,0,7,
 		1,8,3,
 		9,2,0
-	}
-		
+	}	
 	{
 		std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
 		std::vector <Vertex> verts(vertices1, vertices1 + sizeof(vertices1) / sizeof(Vertex));
 		std::vector <Vertex> verts2(vertices2, vertices2 + sizeof(vertices2) / sizeof(Vertex));
-			firstHalf = new Mesh(verts, ind, boxTexture);
-			secondHalf = new Mesh(verts2, ind, boxTexture);
+		
+		firstHalf = new Mesh(verts, ind, boxTexture);
+		secondHalf = new Mesh(verts2, ind, boxTexture);
 
-			RandomizeBox();
-			firstHalf->Translate(startPosition);
-			secondHalf->Translate(startPosition);
+		RandomizeBox();
 	};
 
+	~Box()
+	{
+		delete firstHalf;
+		delete secondHalf;
+		meshShaderProgram.Delete();
+		boxTexture.Delete();
+	}
+
 	void Update(Camera* camera, double deltaTime);
-	Mesh* firstHalf;
-	Mesh* secondHalf;
 	void Detach();
-	void Destroy();
-	bool CheckBounds();
+	bool UnderBounds();
+	bool ScaledToZero();
 private:
 
-	bool detached = false;
+	//settings
+	glm::vec3 currentScale = glm::vec3(1, 1, 1);
+	glm::vec3 moveDirection = glm::vec3(0, 0, 0);
+	glm::vec3 rotationDirection = glm::vec3(0, 0, 0);
+	glm::vec3 startPosition = glm::vec3(0, 0, 0);
+	float gravityPull = 0.8;
+	float speed = 3;
+
+	//spawning
 	void RandomizeBox();
 	void SpawnLeft();
 	void SpawnRight();
@@ -72,14 +88,7 @@ private:
 	void SpawnUp();
 
 	void DrawBox(Camera* camera);
-
-	glm::vec3 moveDirection = glm::vec3(0,0,0);
-	glm::vec3 rotationDirection = glm::vec3(0,0,0);
-	glm::vec3 startPosition = glm::vec3(4, -1, -4);
-	
-	float gravityPull = 0.8;
-	float speed = 3;
-	ShaderProgram boxShaderProgram;
+	ShaderProgram meshShaderProgram;
 	Texture boxTexture;
 	Vertex vertices1[10];
 	Vertex vertices2[10];

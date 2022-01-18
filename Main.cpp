@@ -29,7 +29,7 @@ bool InitializeOpenGL()
 	SetupHints();
 
 	// Create a window object with desired parameters
-	window = glfwCreateWindow(windowWidth, windowHeight, windowName, NULL, NULL);
+	window = glfwCreateWindow(windowWidth, windowHeight, windowName, NULL, NULL); 
 
 	// Handle an exception in which the window wasnt created
 	if (window == NULL)
@@ -65,6 +65,7 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);
 
+
 	// Main while loop
 	while (Running())
 	{
@@ -74,8 +75,16 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		deltaTime.Calculate();
-		game.Update(deltaTime.Time);
 
+		if (game.paused) 
+		{
+			game.PausedUpdate();
+		}
+		else 
+		{
+			game.Update(deltaTime.Time);
+		}
+		
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events

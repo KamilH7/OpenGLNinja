@@ -3,7 +3,7 @@
 void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 {
 	glm::mat4 rotationMatrix(1.0f);
-	glm::vec4 rotationVector(1.0f);
+	glm::vec4 rotationVector(-1.0f,0.0f,0.0f,0.0f);
 
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -13,7 +13,7 @@ void Mesh::AssignMatrices(ShaderProgram& shaderProgram)
 	Direction = glm::vec3(result.x, result.y, result.z);
 
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f),Position);
-	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
 
 	modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 
@@ -30,9 +30,9 @@ void Mesh::Translate(glm::vec3 position)
 	Mesh::Position += position;
 }
 
-void Mesh::Scale(glm::vec3 scale)
+void Mesh::ChangeScale(glm::vec3 scale)
 {
-	Mesh::scale += scale;
+	Mesh::Scale = scale;
 }
 
 Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Texture& texture) : vertices(vertices), indices(indices), texture(texture)

@@ -37,7 +37,7 @@ void CollisionDetector::Update(Camera* camera, double mouseX, double mouseY)
 	rayOrigin = cameraPosition;
 }
 
-void CollisionDetector::IsColliding(Box* box)
+void CollisionDetector::HandleMouseCollision(Box* box)
 {
 	glm::vec3 sphereCenter = box->firstHalf->Position;
 	float sphereRadius = 1;
